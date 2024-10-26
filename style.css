@@ -79,8 +79,8 @@ html {
   grid-template-columns: 1fr 1fr;
   gap: 2rem;
   padding: 2rem;
-  width: 100%;
-  min-height: 100%;
+  width: 100vw;
+  min-height: 100vh;
   background-color: var(--bg); /* Main content background color */
   position: relative; /* Ensure it takes the full screen */
   z-index: 1; /* Below the intro */
