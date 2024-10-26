@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Wheel of Fortune</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div id="intro">
+      <h1 id="hello">HELLO</h1>
+      <h2 id="welcome">Are you ready?</h2>
+    </div>
+
+    <div id="main-content">
+      <!-- Left side -->
+      <div class="left">
+        <div class="input-row">
+          <input type="text" id="rewardName" placeholder="enter something" />
+          <button id="addRewardButton">Add</button>
+        </div>
+        <div id="rewardList" class="reward-list"></div>
+        <div class="option-row">
+          <button id="equalDistribution">Equal Distribution</button>
+          <button id="randomDistribution">Random Distribution</button>
+        </div>
+      </div>
+
+      <!-- Right side -->
+      <div class="right">
+        <div class="wheel-container">
+          <canvas id="wheelCanvas" width="400" height="400"></canvas>
+          <div id="pointer"></div>
+          <!-- Pointer placed outside the wheel container -->
+        </div>
+        <button id="spinButton">Spin the Wheel!</button>
+      </div>
+    </div>
+
+    <script src="script.js"></script>
+  </body>
+</html>

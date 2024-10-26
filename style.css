@@ -1,0 +1,378 @@
+@font-face {
+  font-family: "Mansalva";
+  src: url("fonts/Mansalva-Regular.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "Lato";
+  src: url("fonts/Lato-Regular.ttf") format("truetype");
+}
+
+/* Root colors */
+:root {
+  --bg: #465240;
+  --inp-clr: #f0f0f0;
+  --clr-btn: #8d2a3c;
+  --bg-rew: #cfd1bf;
+  --bg-inp-hov: #681827;
+  --svg: #a50c0c;
+}
+
+/* General styling */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body,
+html {
+  background-color: var(--bg-rew); /* Set body background */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  overflow: auto; /* Prevent scrolling */
+}
+
+/* Intro Section */
+#intro {
+  background-color: var(--bg-rew); /* Intro section background */
+  position: fixed; /* Ensure it covers the entire viewport */
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 2rem auto;
+  z-index: 2; /* Ensure it’s on top */
+}
+
+#hello,
+#welcome {
+  font-family: "Mansalva", cursive;
+  font-weight: 700;
+  color: var(--bg);
+  font-size: 4rem;
+  opacity: 0;
+  margin: 0;
+}
+
+#hello {
+  animation: animateH1 3s ease-in-out forwards;
+}
+
+#welcome {
+  animation: zoomText 1s 3s forwards;
+}
+
+/* Main content grid layout */
+#main-content {
+  display: none; /* Hide main content initially */
+  opacity: 0;
+  transition: opacity 1s ease-in;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+  padding: 2rem;
+  width: 100%;
+  height: 100vh;
+  background-color: var(--bg); /* Main content background color */
+  position: fixed; /* Ensure it takes the full screen */
+  top: 0;
+  left: 0;
+  z-index: 1; /* Below the intro */
+}
+
+/* Keyframes */
+@keyframes animateH1 {
+  0% {
+    opacity: 0;
+    transform: translate(0, 0) scale(0.5) rotate(0deg);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translate(25px, 0) scale(1.5) rotate(360deg);
+  }
+}
+
+@keyframes zoomText {
+  0% {
+    opacity: 0;
+    transform: scale(0);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.left,
+.right {
+  padding: 1rem;
+}
+
+/* LEFT HALF*/
+
+.left {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+}
+
+.input-row {
+  display: flex;
+  gap: 1rem;
+}
+
+input[type="text"] {
+  font-family: "Lato";
+  padding: 0.6rem;
+  background-color: var(--clr-btn);
+  color: var(--inp-clr);
+  font-size: 1rem;
+  border: 1px solid var(--bg);
+  border-radius: 0.5rem;
+  transition: background-color 0.3s ease;
+  width: 20rem; /* Input wider than select */
+  max-width: 100%; /* Ensure it doesn't overflow */
+}
+
+input:hover {
+  background-color: var(--bg-inp-hov); /* Hover effect */
+}
+
+input::placeholder {
+  font-weight: bold;
+  opacity: 0.7;
+  color: var(--inp-clr);
+}
+
+.reward-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.reward-item {
+  display: flex;
+  justify-content: space-between;
+  padding: 1rem;
+  background-color: var(--bg-rew);
+  color: var(--clr-btn);
+  font-weight: 600;
+  border-radius: 0.5rem;
+  gap: 1rem;
+}
+
+.reward-item button {
+  font-weight: 500;
+  background-color: var(--clr-btn);
+  color: var(--bg-rew);
+  border: none;
+  border-radius: 0.5rem;
+  padding: .2rem;
+}
+
+.option-row {
+  margin-top: 1rem;
+  display: flex;
+  gap: 1rem;
+}
+
+.option-row button,
+.input-row button,
+.popup-content button {
+  font-family: "Lato";
+  background: linear-gradient(to right, #649173 0%, #dbd5a4 51%, #649173 100%);
+  padding: 0.5rem 1rem;
+  font-size: 1rem;
+  font-weight: 600;
+  border: none;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  text-align: center;
+  transition: 0.5s;
+  background-size: 200% auto;
+  color: var(--clr-btn);
+  box-shadow: 0 0 10px #cfd1bf;
+  display: block;
+}
+
+.option-row button:hover,
+.input-row button:hover,
+.popup-content button:hover {
+  background-position: right center; /* change the direction of the change here */
+  color: var(--bg-inp-hov);
+}
+
+/* RIGHT HALF*/
+
+.right {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+.wheel-container {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#pointer {
+  position: absolute;
+  top: 190px; /* Positioned just above the circle */
+  left: 103%;
+  transform: translateX(-50%);
+  width: 0;
+  height: 0;
+  border-bottom: 10px solid transparent;
+  border-right: 20px solid var(--bg-rew);
+  border-top: 10px solid transparent;
+  z-index: 1000; /* Make sure pointer is always on top */
+}
+
+#spinButton {
+  margin-top: 1rem;
+  padding: 0.5rem 1.5rem;
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--clr-btn);
+  background: linear-gradient(to right, #649173 0%, #dbd5a4 51%, #649173 100%);
+  border: none;
+  border-radius: 20px;
+  cursor: pointer;
+  box-shadow: 0 0 20px #6eb786;
+  transition: all 0.5s ease;
+}
+
+#spinButton:hover {
+  background: linear-gradient(145deg, #ff4500, #ff00ff);
+  box-shadow: 0 0 50px #ff4500, 0 0 80px #ff00ff;
+  transform: scale(1.1);
+  color: var(--bg-inp-hov);
+  font-weight: 700;
+}
+
+#spinButton:active {
+  box-shadow: 0 0 40px rgba(255, 69, 0, 0.8);
+}
+
+/* Pop-up styles */
+.winner-popup {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: var(--bg-rew);
+  border: none;
+  border-radius: 0.5rem;
+  padding: 20px;
+  z-index: 1001;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.9);
+  text-align: center;
+}
+
+.popup-content {
+  max-width: 20rem;
+}
+
+.popup-content h2 {
+  margin-top: 0;
+  font-size: 1.5rem;
+  color: var(--bg);
+}
+
+.popup-content p {
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: var(--clr-btn);
+}
+
+.popup-content button {
+  margin: 1rem auto;
+}
+
+/* Responsive styling for small screens */
+@media (max-width: 940px) {
+
+  
+  #main-content {
+    grid-template-columns: 1fr; /* Single column layout */
+    gap: 1rem;
+  }
+
+  .left,
+  .right {
+    padding: 1rem;
+    width: 100%;
+  }
+
+  
+
+  #hello,
+  #welcome {
+    font-size: 2.5rem; /* Smaller text for intro on mobile */
+  }
+
+  .input-row {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  input[type="text"] {
+    width: 100%; /* Full width input on small screens */
+  }
+
+  .reward-item {
+    flex-direction: column; /* Stack reward items vertically */
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .option-row {
+    flex-direction: column;
+    width: 50%;
+  }
+
+  #pointer {
+    top: 45%; /* Adjust based on the responsive canvas size */
+    left: calc(1%+70vw); /* Center the pointer with the smaller wheel */
+    transform: translateX(-50%);
+    border-right: 15px solid var(--bg-rew); /* Adjust size to keep proportion with the wheel */
+  }
+
+  /* Make wheel responsive */
+  .wheel-container canvas {
+    width: 80vw; /* Set responsive width for canvas */
+    height: auto; /* Maintain aspect ratio */
+    max-width: 400px; /* Limit max size */
+  }
+
+  #spinButton {
+    width: 50%;
+    font-size: 1.2rem;
+  }
+}
+
+@media (max-width: 510px) {
+  #pointer {
+    top: 45%; /* Adjust based on the responsive canvas size */
+    left: calc(1% + 80vw); /* Center the pointer with the smaller wheel */
+    transform: translateX(-50%);
+    border-right: 15px solid var(--bg-rew); /* Adjust size to keep proportion with the wheel */
+  }
+}
