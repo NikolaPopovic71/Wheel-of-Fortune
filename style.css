@@ -31,8 +31,8 @@ html {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100vh;
-  overflow: auto; /* Prevent scrolling */
+  height: 100%;
+  overflow-y: auto; /* Prevent scrolling */
 }
 
 /* Intro Section */
@@ -80,11 +80,9 @@ html {
   gap: 2rem;
   padding: 2rem;
   width: 100%;
-  height: 100vh;
+  min-height: 100%;
   background-color: var(--bg); /* Main content background color */
-  position: fixed; /* Ensure it takes the full screen */
-  top: 0;
-  left: 0;
+  position: relative; /* Ensure it takes the full screen */
   z-index: 1; /* Below the intro */
 }
 
