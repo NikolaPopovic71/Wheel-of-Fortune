@@ -4,25 +4,21 @@ let currentRotation = 0;
 let isSpinning = false;
 
 document.addEventListener("DOMContentLoaded", () => {
-    const intro = document.getElementById("intro");
-    const mainContent = document.getElementById("main-content");
+  const intro = document.getElementById("intro");
+  const mainContent = document.getElementById("main-content");
 
-    // Function to display the main content with grid structure
-    const showMainContent = () => {
-        intro.style.opacity = "0"; // Fade out the intro
-        setTimeout(() => {
-            intro.style.display = "none"; // Hide intro after fade out
-            mainContent.style.display = "grid"; // Show main content as grid
-            mainContent.style.opacity = "1"; // Fade in main content
-        }, 1000);
-    };
+  // Function to display the main content with grid structure
+  const showMainContent = () => {
+    intro.style.opacity = "0"; // Fade out the intro
+    setTimeout(() => {
+      intro.style.display = "none"; // Hide intro after fade out
+      mainContent.style.display = "grid"; // Show main content as grid
+      mainContent.style.opacity = "1"; // Fade in main content
+    }, 1000);
+  };
 
-    setTimeout(showMainContent, 6000); // Delay for showing main content
+  setTimeout(showMainContent, 6000); // Delay for showing main content
 });
-
-
-
-
 
 // Helper to generate unique colors for each segment
 function generateUniqueColors(count) {
@@ -62,7 +58,7 @@ function renderRewards() {
     rewardEl.classList.add("reward-item");
     rewardEl.innerHTML = `
             ${reward}
-            <button onclick="deleteReward(${index})">Delete</button>
+            <button class="deleteButton" onclick="deleteReward(${index})">Delete</button>
         `;
     rewardList.appendChild(rewardEl);
   });
@@ -98,26 +94,35 @@ function renderWheel(equalDistribution = true) {
 
   let startAngle = 0;
   rewards.forEach((reward, index) => {
-    const endAngle = startAngle + (angles[index] * Math.PI) / 180; // Convert to radians
+    // Set up the angle for each segment
+    const endAngle = startAngle + (angles[index] * Math.PI) / 180;
     ctx.beginPath();
     ctx.moveTo(radius, radius);
-    ctx.arc(radius, radius, radius - 5, startAngle, endAngle); // Subtract 5 to match the border
-    ctx.fillStyle = colors[index]; // Assign a unique color
+    ctx.arc(radius, radius, radius - 5, startAngle, endAngle);
+    ctx.fillStyle = colors[index];
     ctx.fill();
-    ctx.strokeStyle = "#cfd1bf"; // Set the border color of the wheel segments
-    ctx.lineWidth = 5; // Adjust the width of the border if needed
+    ctx.strokeStyle = "#cfd1bf";
+    ctx.lineWidth = 5;
     ctx.stroke();
+
+    // Limit to 18 characters and add ellipsis if necessary
+    const maxChars = 16;
+    const displayText = reward.length > maxChars ? `${reward.slice(0, maxChars)}...` : reward;
+
+    // Position the text within the segment
     ctx.save();
     ctx.translate(radius, radius);
     ctx.rotate((startAngle + endAngle) / 2);
     ctx.textAlign = "right";
     ctx.fillStyle = "#681827";
-    ctx.font = "bold 16px Arial";
-    ctx.fillText(reward, radius - 15, 10); // Position the text
+    ctx.font = "bold 20px Arial";
+    ctx.fillText(displayText, radius - 15, 10); // Adjust as needed for centering
+
     ctx.restore();
     startAngle = endAngle;
   });
 }
+
 
 // Random distribution logic to ensure total is 360 degrees
 function randomDistribution() {
@@ -186,6 +191,13 @@ document.getElementById("equalDistribution").addEventListener("click", () => {
     return;
   }
   renderWheel(true);
+  document.getElementById("rewardName").disabled = true;
+  document.getElementById("addRewardButton").disabled = true;
+  document
+    .querySelectorAll("button.deleteButton")
+    .forEach((button) => (button.disabled = true));
+  document.getElementById("equalDistribution").disabled = true;
+  document.getElementById("randomDistribution").disabled = true;
 });
 
 // Random distribution button
@@ -195,6 +207,13 @@ document.getElementById("randomDistribution").addEventListener("click", () => {
     return;
   }
   renderWheel(false);
+  document.getElementById("rewardName").disabled = true;
+  document.getElementById("addRewardButton").disabled = true;
+  document
+    .querySelectorAll("button.deleteButton")
+    .forEach((button) => (button.disabled = true));
+  document.getElementById("equalDistribution").disabled = true;
+  document.getElementById("randomDistribution").disabled = true;
 });
 
 // Initialize empty wheel on page load
@@ -239,6 +258,7 @@ function resetGame() {
   angles = [];
   currentRotation = 0;
   initializeWheel();
+  document.getElementById("rewardName").disabled = false;
   document.getElementById("rewardList").innerHTML = ""; // Clear the reward list
   wheelCanvas.style.transition = "none"; // Reset rotation without animation
   wheelCanvas.style.transform = `rotate(0deg)`; // Reset rotation
@@ -251,3 +271,4 @@ function resetGame() {
   document.getElementById("randomDistribution").disabled = false;
   isSpinning = false; // Allow new spins
 }
+
