@@ -106,7 +106,7 @@ function renderWheel(equalDistribution = true) {
     ctx.stroke();
 
     // Limit to 18 characters and add ellipsis if necessary
-    const maxChars = 16;
+    const maxChars = 15;
     const displayText = reward.length > maxChars ? `${reward.slice(0, maxChars)}...` : reward;
 
     // Position the text within the segment
